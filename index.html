@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Mirum Assignment</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <header class="bg-header">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center text-center">
+                <div class="header-content">
+                    <h2 class="header-h2">LOREM IPSUM</h2>
+                    <h5 class="header-h5">Some Dummy Text</h5>
+                    <h5 class="header-h5">Some Additional Dummy Text</h5>
+                </div>
+
+                <img class="logo" src="assets/images/logo.png" alt="">
+                <img class="cloud1" src="assets/images/cloud.png" alt="">
+                <div>
+                    <img data-toggle="modal" data-target="#VideoModal" data-modal="'VideoModal'" class="video-thumbnail "
+                        src="assets/images/video-thumb.png" alt="">
+                </div>
+                <img class="h-100 char-position" src="assets/images/character.png" alt="">
+
+            </div>
+        </div>
+    </header>
+
+    <section id="calculator">
+        <div class="container">
+            <h5 class="text-center pt-40 text text-white">CALCULATOR</h5>
+            <div id="calculatorBox">
+                <label class="amountLabel">AMOUNT</label>
+                <input type="number" value="0" id="cAmount" min="0">
+                <br>
+                <label class="termLabel">TERM</label>
+                <input type="number" value="0" id="cTerm" min="0">
+                <span class="amountLabel">YEARS</span>
+                <label class="rateLabel">RATE</label>
+                <input type="number" value="0" id="cRate" min="0">
+                <hr>
+                <button class="btn btn-warning cButton" onclick="calculate()">Calculate</button>
+                <label class="resultLabel">TOTAL</label>
+                <input type="number" value="0" id="cResult" disabled>
+            </div>
+            <div class="text-center">
+                <img class="left-stick" src="assets/images/cal-stick.png" alt="">
+                <img class="right-stick" src="assets/images/cal-stick.png" alt="">
+            </div>
+
+        </div>
+    </section>
+
+    <section id="articles">
+        <div class="container">
+            <h5 class="text-center pt-40 article-header text-white">ARTICLES</h5>
+            <img class="poll-img-left" src="assets/images/cal-left-poll.png" alt="">
+            <img class="poll-img-right" src="assets/images/cal-right-poll.png" alt="">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <img class="laptop" src="assets/images/article-thumb.png" alt="">
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="card-data-container" id="card-data-container">
+                        <h6 id="card-header"></h6>
+                        <p id="card-data"></p>
+                    </div>
+                    <span style="color: white" onClick="readMoreData()">
+                        <strong id="readMore">READ MORE..</strong>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="related">
+        <div class="container">
+            <h5 class="text-center pt-40">RELATED</h5>
+            <div class="row justify-content-center">
+                <div class="sachinLeft">
+                    <img class="sachinImg" src="assets/images/related-1.png">
+                    <h5 class="mt-3 ml-40">Sachin Left</h5>
+                </div>
+                <div class="sachinRight">
+                    <img class="sachinImg" src="assets/images/related-2.png">
+                    <h5 class="mt-3 ml-40">Sachin Right</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="VideoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="width: 350%;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/b4OH3vBANa4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="small text-center">Disclaimer | Terms of Use and Privacy Notice </div>
+            <div class="small text-center greenColor">© 2020 MIRUM. All Rights Reserved. </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var Data = (function () {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "./assets/data/data.json",
+                'dataType': "json",
+                'success': function (data) {
+                    json = data;
+                }
+            });
+            return json;
+        })();
+        function calculate() {
+            let p, r, t;
+            p = document.getElementById("cAmount").value;
+            t = document.getElementById("cTerm").value;
+            r = document.getElementById("cRate").value;
+            result = document.getElementById("cResult");
+            let A = (p * Math.pow((1 + (r / (100))), t));
+            if (A.toFixed(2) < 10) A = "0" + A.toFixed(2)
+            else A = A.toFixed(2);
+            result.value = A;
+        }
+        $(document).ready(function () {
+            document.getElementById('card-header').innerText = Data.header;
+            document.getElementById('card-data').innerText = Data.body;
+            document.getElementById('card-header').style.color = "white";
+            document.getElementById('card-data').style.color = "white";
+        });
+
+        function readMoreData() {
+            if (document.getElementById('readMore').innerText == "READ LESS..") {
+                document.getElementById('card-data-container').style.overflowY = "hidden";
+                document.getElementById('readMore').innerText = "READ MORE.."
+            } else {
+                document.getElementById('card-data-container').style.overflowY = "scroll";
+                document.getElementById('readMore').innerText = "READ LESS.."
+            }
+        }
+    </script>
+</body>
+
+</html>
